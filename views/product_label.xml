@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_simple_label" inherit_id="product.report_simple_label">
+             <xpath expr="//div[@style]" position="replace">
+                <div class="page" style="padding:0;margin-left: -10px; margin-right: -10px;">
+     
+					<strong t-field="product.name" style="font-size:20px; margin-top: -15px;        margin-left:0px; white-space: nowrap; border: 1px solid #FFFFFF;   overflow:hidden; text-overflow: clip; "/>
+     
+					<table style="border-spacing:0;margin-bottom:0; width:260px; height:42px;" class="table">
+     
+						<tbody>
+							<tr style="width: 1in;">
+								<td style="border: 0.5px solid black;text-align: center; vertical-align: middle;padding:0" class="col-xs-5">
+									<img t-if="product.barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', product.barcode, 600, 100)" style="width:100%;height:40%;"/>
+								</td>
+                   
+							</tr>
+						</tbody>
+					</table>
+					<p style="margin-top: -2; margin-bottom: 0;  margin-right : -10; text-align: center; font-size:30px;"> 
+						<strong t-field="product.list_price"/>
+						<strong t-field="product.company_id.currency_id.symbol"/>
+					</p>
+					<p style="page-break-after:always;"/>
+				</div>
+            </xpath>
+        </template>
+
+        <template id="report_productlabel">
+            <t t-call="report.html_container">
+                <div class="page">
+                    <t t-foreach="docs" t-as="product">
+                        <t t-call="product.report_simple_label">
+                            <t t-set="product" t-value="product"/>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>
